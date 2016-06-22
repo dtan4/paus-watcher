@@ -1,0 +1,9 @@
+package: github.com/dtan4/paus-watcher
+import:
+- package: github.com/coreos/etcd
+  subpackages:
+  - client
+- package: github.com/pkg/errors
+- package: golang.org/x/net
+  subpackages:
+  - context
