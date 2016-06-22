@@ -1,0 +1,8 @@
+*
+!Dockerfile
+!Makefile
+!etcd.go
+!main.go
+!glide.lock
+!glide.yaml
+!bin/paus-watcher_linux-amd64
