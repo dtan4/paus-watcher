@@ -49,7 +49,7 @@ $(BINARYDIR)/$(BINARY)$(LINUX_AMD64_SUFFIX): $(SOURCES)
 	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o $(BINARYDIR)/$(BINARY)$(LINUX_AMD64_SUFFIX)
 
 .PHONY: ci-docker-release
-ci-docker-release: docker-release-build
+ci-docker-release: docker-build
 	@docker login -e="$(DOCKER_QUAY_EMAIL)" -u="$(DOCKER_QUAY_USERNAME)" -p="$(DOCKER_QUAY_PASSWORD)" $(DOCKER_REPOSITORY)
 	docker push $(DOCKER_IMAGE)
 
@@ -62,12 +62,8 @@ deps: $(BINARYDIR)/$(GLIDE)
 	$(BINARYDIR)/$(GLIDE) install
 
 .PHONY: docker-build
-docker-build: clean
+docker-build: $(BINARYDIR)/$(BINARY)$(LINUX_AMD64_SUFFIX)
 	docker build -t $(DOCKER_IMAGE) .
-
-.PHONY: docker-release-build
-docker-release-build: $(BINARYDIR)/$(BINARY)$(LINUX_AMD64_SUFFIX)
-	docker build -f Dockerfile.release -t $(DOCKER_IMAGE) .
 
 .PHONY: run-etcd
 run-etcd: stop-etcd
