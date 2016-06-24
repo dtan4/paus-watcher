@@ -6,6 +6,11 @@ import (
 	"os/signal"
 
 	"github.com/coreos/etcd/client"
+	"github.com/dtan4/paus-watcher/config"
+)
+
+const (
+	targetKey = "/paus/users"
 )
 
 func callback(resp *client.Response) {
@@ -13,12 +18,14 @@ func callback(resp *client.Response) {
 }
 
 func main() {
-	if len(os.Args) != 2 {
+	config, err := config.LoadConfig()
+
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 
-	endpoint := os.Args[1]
-	etcd, err := NewEtcd(endpoint)
+	etcd, err := NewEtcd(config.EtcdEndpoint)
 
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -33,5 +40,5 @@ func main() {
 		os.Exit(0)
 	}()
 
-	etcd.Watch("/paus/users/", callback)
+	etcd.Watch(targetKey, callback)
 }

@@ -1,12 +1,14 @@
-hash: 4ca7f344111d7e0c2046330dff5d9afcff9c3687bc3ab49748039b87cfbe981f
-updated: 2016-06-22T20:24:51.930023728+09:00
+hash: 09a55fb9f5470dc51eb4df293a759402d827275bd5638a405ffe736f126c9f88
+updated: 2016-06-24T10:26:12.487491012+09:00
 imports:
 - name: github.com/coreos/etcd
-  version: 0b5ea3ec947a649d39b25c96e33ac1c743355be3
+  version: a7189ef0736bd50a3f05f3a14659eb1444aaa7e7
   subpackages:
   - client
   - pkg/pathutil
   - pkg/types
+- name: github.com/kelseyhightower/envconfig
+  version: 91921eb4cf999321cdbeebdba5a03555800d493b
 - name: github.com/pkg/errors
   version: cbd18b5440315aa74a17dee2e50b67675b872b49
 - name: github.com/ugorji/go
