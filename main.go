@@ -7,6 +7,7 @@ import (
 
 	"github.com/coreos/etcd/client"
 	"github.com/dtan4/paus-watcher/config"
+	"github.com/dtan4/paus-watcher/store"
 )
 
 const (
@@ -25,7 +26,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	etcd, err := NewEtcd(config.EtcdEndpoint)
+	etcd, err := store.NewEtcd(config.EtcdEndpoint)
 
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
