@@ -9,7 +9,7 @@ type Provider interface {
 }
 
 func NewProvider(config *config.Config) Provider {
-	if (config.DatadogAPIKey != "") && (config.DatadogAppKey != "") {
+	if config.DatadogAPIKey != "" { // AppKey is optional
 		return NewDatadog(config.DatadogAPIKey, config.DatadogAppKey)
 	}
 
