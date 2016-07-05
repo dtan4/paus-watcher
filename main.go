@@ -10,11 +10,8 @@ import (
 	"github.com/dtan4/paus-watcher/store"
 )
 
-const (
-	targetKey = "/paus/users"
-)
-
 func callback(resp *client.Response) {
+	// get, set, delete, update, create, compareAndSwap, compareAndDelete and expire.
 	fmt.Printf("[%s] %s\n", resp.Action, resp.Node.Key)
 }
 
@@ -41,5 +38,5 @@ func main() {
 		os.Exit(0)
 	}()
 
-	etcd.Watch(targetKey, callback)
+	etcd.Watch(config.TargetKey, callback)
 }

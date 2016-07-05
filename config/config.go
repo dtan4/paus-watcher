@@ -11,6 +11,7 @@ const (
 
 type Config struct {
 	EtcdEndpoint string `envconfig:"etcd_endpoint" default:"http://localhost:2379"`
+	TargetKey    string `envconfig:"target_key" required:"true"`
 }
 
 func LoadConfig() (*Config, error) {
