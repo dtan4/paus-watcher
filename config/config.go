@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	ConfigPrefix = "paus"
+	configPrefix = "paus"
 )
 
 type Config struct {
@@ -17,7 +17,7 @@ type Config struct {
 func LoadConfig() (*Config, error) {
 	var config Config
 
-	err := envconfig.Process(ConfigPrefix, &config)
+	err := envconfig.Process(configPrefix, &config)
 
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to load config from envs.")
