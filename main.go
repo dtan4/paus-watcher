@@ -7,12 +7,13 @@ import (
 
 	"github.com/coreos/etcd/client"
 	"github.com/dtan4/paus-watcher/config"
+	p "github.com/dtan4/paus-watcher/provider"
 	"github.com/dtan4/paus-watcher/store"
 )
 
-func callback(resp *client.Response) {
-	// get, set, delete, update, create, compareAndSwap, compareAndDelete and expire.
-	fmt.Printf("[%s] %s\n", resp.Action, resp.Node.Key)
+func callback(provider p.Provider, resp *client.Response) error {
+	// Action: get, set, delete, update, create, compareAndSwap, compareAndDelete and expire.
+	return provider.Notify(resp.Action, resp.Node.Key, resp.Node.Value)
 }
 
 func main() {
@@ -30,6 +31,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	provider := p.NewProvider(config)
+
+	if provider == nil {
+		fmt.Fprintln(os.Stderr, "No provider can be used.")
+		os.Exit(1)
+	}
+
 	sigch := make(chan os.Signal, 1)
 	signal.Notify(sigch, os.Interrupt)
 
@@ -38,5 +46,5 @@ func main() {
 		os.Exit(0)
 	}()
 
-	etcd.Watch(config.TargetKey, callback)
+	etcd.Watch(config.TargetKey, provider, callback)
 }

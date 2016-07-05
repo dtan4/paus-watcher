@@ -2,6 +2,7 @@ package store
 
 import (
 	"github.com/coreos/etcd/client"
+	"github.com/dtan4/paus-watcher/provider"
 	"github.com/pkg/errors"
 	"golang.org/x/net/context"
 )
@@ -10,7 +11,7 @@ type Etcd struct {
 	keysAPI client.KeysAPI
 }
 
-type EtcdWatchFunc func(*client.Response)
+type EtcdWatchFunc func(provider.Provider, *client.Response) error
 
 func NewEtcd(endpoint string) (*Etcd, error) {
 	config := client.Config{
@@ -29,7 +30,7 @@ func NewEtcd(endpoint string) (*Etcd, error) {
 	return &Etcd{keysAPI}, nil
 }
 
-func (c *Etcd) Watch(key string, callback EtcdWatchFunc) error {
+func (c *Etcd) Watch(key string, provider provider.Provider, callback EtcdWatchFunc) error {
 	w := c.keysAPI.Watcher(key, &client.WatcherOptions{Recursive: true})
 
 	for {
@@ -43,6 +44,8 @@ func (c *Etcd) Watch(key string, callback EtcdWatchFunc) error {
 			continue
 		}
 
-		callback(resp)
+		if err := callback(provider, resp); err != nil {
+			return err
+		}
 	}
 }

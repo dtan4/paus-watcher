@@ -1,8 +1,10 @@
-hash: 09a55fb9f5470dc51eb4df293a759402d827275bd5638a405ffe736f126c9f88
-updated: 2016-06-24T10:26:12.487491012+09:00
+hash: e4199004dff2dc2cf4dc4588d66cc13a329299b6a100adf3b609ea791bc9ee13
+updated: 2016-07-05T17:53:41.003326552+09:00
 imports:
+- name: github.com/cenkalti/backoff
+  version: cdf48bbc1eb78d1349cbda326a4a037f7ba565c6
 - name: github.com/coreos/etcd
-  version: a7189ef0736bd50a3f05f3a14659eb1444aaa7e7
+  version: c7dd74d8d397faac444df23a9cafe1f0ae4be9c7
   subpackages:
   - client
   - pkg/pathutil
@@ -10,13 +12,15 @@ imports:
 - name: github.com/kelseyhightower/envconfig
   version: 91921eb4cf999321cdbeebdba5a03555800d493b
 - name: github.com/pkg/errors
-  version: cbd18b5440315aa74a17dee2e50b67675b872b49
+  version: a2d6902c6d2a2f194eb3fb474981ab7867c81505
 - name: github.com/ugorji/go
   version: b94837a2404ab90efe9289e77a70694c355739cb
   subpackages:
   - codec
+- name: github.com/zorkian/go-datadog-api
+  version: 965799361071d6c525f05b498ad5bc059c4c59b2
 - name: golang.org/x/net
-  version: bc3663df0ac92f928d419e31e0d2af22e683a5a2
+  version: b400c2eff1badec7022a8c8f5bea058b6315eed7
   subpackages:
   - context
 devImports: []
