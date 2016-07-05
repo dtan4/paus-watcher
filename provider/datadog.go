@@ -24,7 +24,7 @@ func (d Datadog) Notify(action, key, value string) error {
 		return nil
 	}
 
-	base := filepath.Base(value)
+	base := filepath.Base(key)
 	timestamp, err := strconv.Atoi(base)
 
 	if err != nil {
