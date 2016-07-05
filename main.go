@@ -52,5 +52,8 @@ func main() {
 		os.Exit(0)
 	}()
 
-	etcd.Watch(config.TargetKey, provider, callback)
+	if err := etcd.Watch(config.TargetKey, provider, callback); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
