@@ -1,6 +1,8 @@
 package provider
 
 import (
+	"fmt"
+	"path/filepath"
 	"strconv"
 
 	"github.com/pkg/errors"
@@ -22,16 +24,18 @@ func (d Datadog) Notify(action, key, value string) error {
 		return nil
 	}
 
-	timestamp, err := strconv.Atoi(value)
+	base := filepath.Base(value)
+	timestamp, err := strconv.Atoi(base)
 
 	if err != nil {
-		return errors.Wrapf(err, "Failed to parse timestamp: %s", value)
+		return errors.Wrapf(err, "Failed to parse timestamp: %s", base)
 	}
 
 	event := &datadog.Event{
-		Title: "Deployed new revision",
+		Title: fmt.Sprintf("Deployed new revision: %s", value),
 		Text:  key,
 		Time:  timestamp,
+		Tags:  []string{"paus:deployment"},
 	}
 
 	_, err = d.client.PostEvent(event)
