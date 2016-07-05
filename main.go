@@ -13,7 +13,13 @@ import (
 
 func callback(provider p.Provider, resp *client.Response) error {
 	// Action: get, set, delete, update, create, compareAndSwap, compareAndDelete and expire.
-	return provider.Notify(resp.Action, resp.Node.Key, resp.Node.Value)
+	if err := provider.Notify(resp.Action, resp.Node.Key, resp.Node.Value); err != nil {
+		return err
+	}
+
+	fmt.Printf("[%s] %s\n", resp.Action, resp.Node.Key)
+
+	return nil
 }
 
 func main() {
